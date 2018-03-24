@@ -50,6 +50,14 @@ final class DefaultInterpreter private[usermanagement] (
       result = maybeUser.toRight(Error.NotFound)
     } yield result
 
+  def getByUserName(
+      userName: UserName
+  ): Future[Error Either User] =
+    for {
+      maybeUser ← userRepository.getByUserName(userName)
+      result = maybeUser.toRight(Error.NotFound)
+    } yield result
+
   def signUp(
       userName: UserName,
       emailAddress: EmailAddress,
@@ -190,6 +198,11 @@ final class UnreliableInterpreter private[usermanagement] (
       id: Id
   ): Future[Error Either User] =
     failOrTimeout(underlying.get(id))
+
+  def getByUserName(
+      userName: UserName
+  ): Future[Error Either User] =
+    failOrTimeout(underlying.getByUserName(userName))
 
   def signUp(
       userName: UserName,

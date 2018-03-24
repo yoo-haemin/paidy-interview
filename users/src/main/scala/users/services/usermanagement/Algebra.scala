@@ -11,6 +11,10 @@ trait Algebra[F[_]] {
       id: Id
   ): F[Error Either User]
 
+  def getByUserName(
+      userName: UserName
+  ): F[Error Either User]
+
   def signUp(
       userName: UserName,
       emailAddress: EmailAddress,
