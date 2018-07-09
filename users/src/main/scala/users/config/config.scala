@@ -1,7 +1,9 @@
 package users.config
 
+import org.zalando.grafter.macros.readers
 import cats.data._
 
+@readers
 case class ApplicationConfig(
     executors: ExecutorsConfig,
     services: ServicesConfig

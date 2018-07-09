@@ -15,7 +15,6 @@ object Main extends ServerApp[IO] with AppConfig
 
 abstract class ServerApp[F[_]: Effect: Future ~> ?[_]] extends StreamApp[F] {
   val application: Application
-  //Lazy vals prevent NPEs caused by DelayedInit
   implicit lazy val ec = application.services.ec
   implicit lazy val service = application.services.userManagement.convert[F]
 
@@ -46,5 +45,4 @@ trait AppConfig {
   )
 
   val application = Application.fromApplicationConfig.run(config)
-
 }
