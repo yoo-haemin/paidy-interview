@@ -14,9 +14,6 @@ case class ExecutorsConfig(
 )
 
 object ExecutorsConfig {
-  val fromApplicationConfig: Reader[ApplicationConfig, ExecutorsConfig] =
-    Reader(_.executors)
-
   case class ServicesConfig(
       parallellism: Int
   )

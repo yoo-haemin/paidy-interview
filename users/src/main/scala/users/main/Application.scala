@@ -3,14 +3,9 @@ package users.main
 import cats.data._
 import users.config._
 
-object Application {
-  val reader: Reader[Services, Application] =
-    Reader(Application.apply)
+import org.zalando.grafter.macros.reader
 
-  val fromApplicationConfig: Reader[ApplicationConfig, Application] =
-    Services.fromApplicationConfig andThen reader
-}
-
+@reader
 case class Application(
     services: Services
 )

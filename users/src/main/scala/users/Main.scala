@@ -4,6 +4,7 @@ import cats.~>
 import cats.effect.{ Effect, IO }
 import fs2.{ Stream, StreamApp }, StreamApp.ExitCode
 import org.http4s.server.blaze.BlazeBuilder
+import org.zalando.grafter.syntax.rewriter._
 import scala.concurrent.Future
 import users.config._
 import users.main._
@@ -44,5 +45,5 @@ trait AppConfig {
     )
   )
 
-  val application = Application.fromApplicationConfig.run(config)
+  val application = Application.reader[ApplicationConfig].apply(config).singletons
 }

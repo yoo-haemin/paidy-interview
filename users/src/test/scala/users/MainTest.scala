@@ -10,6 +10,7 @@ import org.http4s.circe._
 import org.http4s.dsl.io._
 import org.http4s.client.blaze._
 import org.http4s.Uri
+import org.zalando.grafter.syntax.rewriter._
 import scala.concurrent.{ duration, Await, Future }
 import users.config._
 import users.domain.User
@@ -41,7 +42,7 @@ object MainTest extends TestSuite {
         )
       )
     )
-    val application = Application.fromApplicationConfig.run(config)
+    val application = Application.reader[ApplicationConfig].apply(config).singletons
     repo = application.services.userManagement
   }
 

@@ -1,18 +1,12 @@
 package users.main
 
 import cats.data.Reader
+import org.zalando.grafter.macros.reader
 
 import users.config._
 import users.persistence.repositories._
 
-object Repositories {
-  val reader: Reader[Unit, Repositories] =
-    Reader((_: Unit) ⇒ Repositories())
-
-  val fromApplicationConfig: Reader[ApplicationConfig, Repositories] =
-    reader.local[ApplicationConfig](_ ⇒ ())
-}
-
+@reader
 final case class Repositories() {
 
   final val userRepository: UserRepository =

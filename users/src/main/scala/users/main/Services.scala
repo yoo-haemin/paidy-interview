@@ -1,24 +1,14 @@
 package users.main
 
 import cats.data._
+import org.zalando.grafter.macros.reader
 
 import users.config._
 import users.services._
 
 import scala.concurrent.Future
 
-object Services {
-  val reader: Reader[(ServicesConfig, Executors, Repositories), Services] =
-    Reader((Services.apply _).tupled)
-
-  val fromApplicationConfig: Reader[ApplicationConfig, Services] =
-    (for {
-      config ← ServicesConfig.fromApplicationConfig
-      executors ← Executors.fromApplicationConfig
-      repositories ← Repositories.fromApplicationConfig
-    } yield (config, executors, repositories)) andThen reader
-}
-
+@reader
 final case class Services(
     config: ServicesConfig,
     executors: Executors,
@@ -34,5 +24,4 @@ final case class Services(
       UserManagement.default(userRepository),
       config.users
     )
-
 }
